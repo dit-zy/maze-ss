@@ -30,28 +30,26 @@
         {
             this.components = new System.ComponentModel.Container();
             this.maze_gen_timer = new System.Windows.Forms.Timer(this.components);
-            this.imageBox = new maze_ss.PictureBoxWithInterpolationMode();
-            ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
+            this.mazeView = new maze_ss.MazeView();
+            ((System.ComponentModel.ISupportInitialize)(this.mazeView)).BeginInit();
             this.SuspendLayout();
             // 
             // maze_gen_timer
             // 
             this.maze_gen_timer.Interval = 1;
-            this.maze_gen_timer.Tick += new System.EventHandler(this.maze_gen_timer_Tick);
             // 
-            // imageBox
+            // mazeView
             // 
-            this.imageBox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            this.imageBox.Location = new System.Drawing.Point(94, 33);
-            this.imageBox.Margin = new System.Windows.Forms.Padding(0);
-            this.imageBox.Name = "imageBox";
-            this.imageBox.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-            this.imageBox.Size = new System.Drawing.Size(416, 422);
-            this.imageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.imageBox.TabIndex = 0;
-            this.imageBox.TabStop = false;
-            this.imageBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.imageBox_MouseClick);
-            this.imageBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.imageBox_MouseMove);
+            this.mazeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mazeView.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            this.mazeView.Location = new System.Drawing.Point(0, 0);
+            this.mazeView.Margin = new System.Windows.Forms.Padding(0);
+            this.mazeView.Name = "mazeView";
+            this.mazeView.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            this.mazeView.Size = new System.Drawing.Size(602, 532);
+            this.mazeView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.mazeView.TabIndex = 0;
+            this.mazeView.TabStop = false;
             // 
             // ScreenSaverForm
             // 
@@ -59,7 +57,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
             this.ClientSize = new System.Drawing.Size(602, 532);
-            this.Controls.Add(this.imageBox);
+            this.Controls.Add(this.mazeView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ScreenSaverForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -68,15 +66,14 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ScreenSaverForm_KeyDown);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ScreenSaverForm_MouseClick);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ScreenSaverForm_MouseMove);
-            ((System.ComponentModel.ISupportInitialize)(this.imageBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mazeView)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private PictureBoxWithInterpolationMode imageBox;
         private System.Windows.Forms.Timer maze_gen_timer;
+        private MazeView mazeView;
     }
 }
 
