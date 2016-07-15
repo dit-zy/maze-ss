@@ -38,15 +38,7 @@ namespace maze_ss
                 }
                 else if (firstArgument == "/p")      // Preview mode
                 {
-                    if (secondArgument == null)
-                    {
-                        MessageBox.Show("Sorry, but the expected window handle was not provided.",
-                            "ScreenSaver", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        return;
-                    }
-
-                    IntPtr previewWndHandle = new IntPtr(long.Parse(secondArgument));
-                    Application.Run(new ScreenSaverForm(previewWndHandle));
+                    Application.Exit();
                 }
                 else if (firstArgument == "/s")      // Full-screen mode
                 {

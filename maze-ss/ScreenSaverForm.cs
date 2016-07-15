@@ -17,18 +17,6 @@ namespace maze_ss
         public static readonly Color NEW_CELL_COLOR = Color.FromArgb(63, 195, 235);
         public static readonly Color WALL_COLOR = Color.FromArgb(43, 39, 30);
 
-        [DllImport("user32.dll")]
-        static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
-
-        [DllImport("user32.dll")]
-        static extern int SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-
-        [DllImport("user32.dll")]
-        static extern bool GetClientRect(IntPtr hWnd, out Rectangle lpRect);
-
         private Point mouseLocation;
         private bool previewMode = false;
         private Random rand = new Random();
@@ -69,26 +57,6 @@ namespace maze_ss
 
             //mazeImage = buffer;
             imageBox.Image = mazeImage;
-        }
-
-        public ScreenSaverForm(IntPtr PreviewWndHandle)
-        {
-            InitializeComponent();
-
-            // Set the preview window as the parent of this window
-            SetParent(this.Handle, PreviewWndHandle);
-
-            // Make this a child window so it will close when the parent dialog closes
-            // GWL_STYLE = -16, WS_CHILD = 0x40000000
-            SetWindowLong(this.Handle, -16, new IntPtr(GetWindowLong(this.Handle, -16) | 0x40000000));
-
-            // Place our window inside the parent
-            Rectangle ParentRect;
-            GetClientRect(PreviewWndHandle, out ParentRect);
-            Size = ParentRect.Size;
-            Location = new Point(0, 0);
-
-            previewMode = true;
         }
 
         private void ScreenSaverForm_Load(object sender, EventArgs e)
