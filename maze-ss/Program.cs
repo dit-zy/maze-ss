@@ -60,9 +60,10 @@ namespace maze_ss
 
         static void ShowScreenSaver()
         {
+            Random rand = new Random();
             foreach (Screen screen in Screen.AllScreens)
             {
-                ScreenSaverForm screensaver = new ScreenSaverForm(screen.Bounds);
+                ScreenSaverForm screensaver = new ScreenSaverForm(screen.Bounds, rand.Next());
                 screensaver.Show();
             }
         }

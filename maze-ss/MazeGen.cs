@@ -10,6 +10,7 @@ namespace maze_ss
     {
         public delegate void AddCellHandler(Object sender, AddCellEventArgs e);
         public event AddCellHandler AddCell;
+        public event EventHandler MazeGenComplete;
 
         protected virtual void OnAddCell(AddCellEventArgs e)
         {
@@ -19,7 +20,15 @@ namespace maze_ss
             }
         }
 
-        public MazeGen()
+        protected virtual void OnMazeGenComplete()
+        {
+            if(MazeGenComplete != null)
+            {
+                MazeGenComplete(this, EventArgs.Empty);
+            }
+        }
+
+        public MazeGen(int seed)
         {
             
         }

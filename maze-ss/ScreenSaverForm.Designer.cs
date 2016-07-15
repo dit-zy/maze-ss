@@ -28,15 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.maze_gen_timer = new System.Windows.Forms.Timer(this.components);
             this.mazeView = new maze_ss.MazeView();
             ((System.ComponentModel.ISupportInitialize)(this.mazeView)).BeginInit();
             this.SuspendLayout();
-            // 
-            // maze_gen_timer
-            // 
-            this.maze_gen_timer.Interval = 1;
             // 
             // mazeView
             // 
@@ -72,7 +66,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Timer maze_gen_timer;
         private MazeView mazeView;
     }
 }

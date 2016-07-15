@@ -15,11 +15,16 @@ namespace maze_ss
     {
         private System.Drawing.Point mouseLocation;
         private MazeGen maze_gen;
+        private Timer maze_gen_timer;
 
-        public ScreenSaverForm(Rectangle Bounds)
+        private Random seed_generator;
+
+        public ScreenSaverForm(Rectangle Bounds, int seed)
         {
             InitializeComponent();
             this.Bounds = Bounds;
+
+            seed_generator = new Random(seed);
         }
 
         private void ScreenSaverForm_Load(object sender, EventArgs e)
@@ -29,16 +34,37 @@ namespace maze_ss
             start();
         }
 
+        async private void delayStart()
+        {
+            await Task.Delay(2000);
+
+            start();
+        }
+
         private void start()
         {
-            maze_gen_timer.Stop();
-            maze_gen_timer.Dispose();
+            maze_gen = new MazeGen(seed_generator.Next());
+            maze_gen.MazeGenComplete += new EventHandler(mazeGenComplete);
 
-            maze_gen = new MazeGen();
+            mazeView.reset();
+            mazeView.addMazeGen(maze_gen);
 
             maze_gen_timer = new Timer();
             maze_gen_timer.Interval = 20;
             maze_gen_timer.Tick += new EventHandler(maze_gen.timer_tick);
+
+            maze_gen_timer.Start();
+        }
+
+        public void mazeGenComplete(Object sender, EventArgs e)
+        {
+            maze_gen_timer.Stop();
+            maze_gen_timer.Dispose();
+            maze_gen_timer = null;
+
+            maze_gen = null;
+
+            delayStart();
         }
 
         private void ScreenSaverForm_MouseMove(object sender, MouseEventArgs e)

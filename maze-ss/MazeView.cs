@@ -15,6 +15,9 @@ namespace maze_ss
         public System.Drawing.Drawing2D.InterpolationMode InterpolationMode { get; set; }
         public System.Drawing.Drawing2D.PixelOffsetMode PixelOffsetMode { get; set; }
 
+        private int mazeSize;
+        private int gridSize;
+        private 
         public MazeView()
         {
             InitializeComponent();
@@ -30,11 +33,21 @@ namespace maze_ss
             
         }
 
+        public void reset()
+        {
+            Image = new Bitmap();
+        }
+
         protected override void OnPaint(PaintEventArgs pe)
         {
             pe.Graphics.InterpolationMode = InterpolationMode;
             pe.Graphics.PixelOffsetMode = PixelOffsetMode;
             base.OnPaint(pe);
         }
+    }
+
+    public enum CellState
+    {
+
     }
 }
