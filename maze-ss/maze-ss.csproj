@@ -54,12 +54,6 @@
     <Compile Include="MazeView.Designer.cs">
       <DependentUpon>MazeView.cs</DependentUpon>
     </Compile>
-    <Compile Include="PictureBoxWithInterpolationMode.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="PictureBoxWithInterpolationMode.Designer.cs">
-      <DependentUpon>PictureBoxWithInterpolationMode.cs</DependentUpon>
-    </Compile>
     <Compile Include="Point.cs" />
     <Compile Include="ScreenSaverForm.cs">
       <SubType>Form</SubType>

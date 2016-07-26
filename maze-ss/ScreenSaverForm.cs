@@ -13,6 +13,8 @@ namespace maze_ss
 {
     public partial class ScreenSaverForm : Form
     {
+        public static readonly int MAZE_SIZE = 23;
+
         private System.Drawing.Point mouseLocation;
         private MazeGen maze_gen;
         private Timer maze_gen_timer;
@@ -29,9 +31,10 @@ namespace maze_ss
 
         private void ScreenSaverForm_Load(object sender, EventArgs e)
         {
-            Cursor.Hide();
-            TopMost = true;
-            start();
+            //Cursor.Hide();
+            //TopMost = true;
+
+            delayStart();
         }
 
         async private void delayStart()
@@ -43,14 +46,14 @@ namespace maze_ss
 
         private void start()
         {
-            maze_gen = new MazeGen(seed_generator.Next());
+            maze_gen = new MazeGen(MAZE_SIZE, seed_generator.Next());
             maze_gen.MazeGenComplete += new EventHandler(mazeGenComplete);
 
-            mazeView.reset();
+            mazeView.reset(MAZE_SIZE);
             mazeView.addMazeGen(maze_gen);
 
             maze_gen_timer = new Timer();
-            maze_gen_timer.Interval = 20;
+            maze_gen_timer.Interval = 10;
             maze_gen_timer.Tick += new EventHandler(maze_gen.timer_tick);
 
             maze_gen_timer.Start();

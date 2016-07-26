@@ -38,7 +38,7 @@ namespace maze_ss
                 }
                 else if (firstArgument == "/p")      // Preview mode
                 {
-                    Application.Exit();
+                    // TODO
                 }
                 else if (firstArgument == "/s")      // Full-screen mode
                 {

@@ -16,5 +16,20 @@ namespace maze_ss
             this.i = i;
             this.j = j;
         }
+
+        public Point add(Point p)
+        {
+            return new Point(i + p.i, j + p.j);
+        }
+
+        public Point subtract(Point p)
+        {
+            return new Point(i - p.i, j - p.j);
+        }
+
+        public Point negate()
+        {
+            return new Point(-i, -j);
+        }
     }
 }
