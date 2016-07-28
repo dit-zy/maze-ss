@@ -13,20 +13,23 @@ namespace maze_ss
 {
     public partial class ScreenSaverForm : Form
     {
-        public static readonly int MAZE_SIZE = 23;
+        public static readonly int GEN_TIMER_INTERVAL = 10;
+        public static readonly int SOLVER_TIMER_INTERVAL = 10;
+        public static readonly int MAZE_SIZE = 31;
 
         private System.Drawing.Point mouseLocation;
         private MazeGen maze_gen;
-        private Timer maze_gen_timer;
+        private Timer maze_timer;
+        private MazeSolver maze_solver;
 
-        private Random seed_generator;
+        private Random rand;
 
         public ScreenSaverForm(Rectangle Bounds, int seed)
         {
             InitializeComponent();
             this.Bounds = Bounds;
 
-            seed_generator = new Random(seed);
+            rand = new Random(seed);
         }
 
         private void ScreenSaverForm_Load(object sender, EventArgs e)
@@ -46,28 +49,52 @@ namespace maze_ss
 
         private void start()
         {
-            maze_gen = new MazeGen(MAZE_SIZE, seed_generator.Next());
+            maze_gen = new MazeGen(MAZE_SIZE, rand.Next());
             maze_gen.MazeGenComplete += new EventHandler(mazeGenComplete);
+
+            maze_solver = new MazeSolver(MAZE_SIZE);
+            maze_solver.addMazeGen(maze_gen);
+            maze_solver.Solution += new MazeSolver.SolutionHandler(solverSolution);
 
             mazeView.reset(MAZE_SIZE);
             mazeView.addMazeGen(maze_gen);
+            mazeView.addMazeSolver(maze_solver);
 
-            maze_gen_timer = new Timer();
-            maze_gen_timer.Interval = 10;
-            maze_gen_timer.Tick += new EventHandler(maze_gen.timer_tick);
+            maze_timer = new Timer();
+            maze_timer.Interval = GEN_TIMER_INTERVAL;
+            maze_timer.Tick += new EventHandler(maze_gen.timer_tick);
 
-            maze_gen_timer.Start();
+            maze_timer.Start();
+        }
+
+        private void solverSolution(object sender, SolutionEventArgs e)
+        {
+            maze_timer.Stop();
+            maze_timer.Dispose();
+            maze_timer = null;
+
+            maze_solver = null;
+
+            delayStart();
         }
 
         public void mazeGenComplete(Object sender, EventArgs e)
         {
-            maze_gen_timer.Stop();
-            maze_gen_timer.Dispose();
-            maze_gen_timer = null;
-
+            maze_timer.Stop();
+            maze_timer.Dispose();
             maze_gen = null;
 
-            delayStart();
+            maze_timer = new Timer();
+            maze_timer.Interval = SOLVER_TIMER_INTERVAL;
+            maze_solver.addTimer(maze_timer);
+
+            int i = rand.Next(2);
+            int j = rand.Next(2);
+            Point start = new Point((MAZE_SIZE - 1) * i, (MAZE_SIZE - 1) * j);
+            Point goal = new Point((MAZE_SIZE - 1) * (1 - i), (MAZE_SIZE - 1) * (1 - j));
+            maze_solver.init(start, goal);
+
+            maze_timer.Start();
         }
 
         private void ScreenSaverForm_MouseMove(object sender, MouseEventArgs e)

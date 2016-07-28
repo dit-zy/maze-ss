@@ -17,6 +17,17 @@ namespace maze_ss
             this.j = j;
         }
 
+        public Point(Point original)
+        {
+            i = original.i;
+            j = original.j;
+        }
+
+        public bool equals(Point other)
+        {
+            return i == other.i && j == other.j;
+        }
+
         public Point add(Point p)
         {
             return new Point(i + p.i, j + p.j);
@@ -30,6 +41,11 @@ namespace maze_ss
         public Point negate()
         {
             return new Point(-i, -j);
+        }
+
+        public bool inBounds(int iBound, int jBound)
+        {
+            return 0 <= i && i < iBound && 0 <= j && j < jBound;
         }
     }
 }

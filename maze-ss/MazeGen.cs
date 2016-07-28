@@ -8,6 +8,14 @@ namespace maze_ss
 {
     public class MazeGen
     {
+        private readonly Point[] neighbor_deltas = new Point[]
+        {
+                new Point( 1,  0),
+                new Point( 0,  1),
+                new Point(-1,  0),
+                new Point( 0, -1)
+        };
+
         public delegate void AddCellHandler(Object sender, AddCellEventArgs e);
         public event AddCellHandler AddCell;
         public event EventHandler MazeGenComplete;
@@ -68,18 +76,11 @@ namespace maze_ss
             Point nextCell = stack_top.new_cell;
             visited_cells[nextCell.i, nextCell.j] = true;
 
-            Point[] neighbor_deltas = new Point[]
-            {
-                new Point( 1,  0),
-                new Point( 0,  1),
-                new Point(-1,  0),
-                new Point( 0, -1)
-            };
             List<Point> neighbors = new List<Point>(4);
             foreach (Point delta in neighbor_deltas)
             {
                 Point neighbor = nextCell.add(delta);
-                if (0 <= neighbor.i && neighbor.i < mazeSize && 0 <= neighbor.j && neighbor.j < mazeSize)
+                if (neighbor.inBounds(mazeSize, mazeSize))
                 {
                     neighbors.Add(neighbor);
                 }
