@@ -28,9 +28,14 @@ namespace maze_ss
             return i == other.i && j == other.j;
         }
 
+        public Point add(int di, int dj)
+        {
+            return new Point(i + di, j + dj);
+        }
+
         public Point add(Point p)
         {
-            return new Point(i + p.i, j + p.j);
+            return add(p.i, p.j);
         }
 
         public Point subtract(Point p)
@@ -46,6 +51,11 @@ namespace maze_ss
         public bool inBounds(int iBound, int jBound)
         {
             return 0 <= i && i < iBound && 0 <= j && j < jBound;
+        }
+
+        public Point multiply(int multiple)
+        {
+            return new Point(i * multiple, j * multiple);
         }
     }
 }

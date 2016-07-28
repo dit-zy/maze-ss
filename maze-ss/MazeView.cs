@@ -19,8 +19,8 @@ namespace maze_ss
         public System.Drawing.Drawing2D.InterpolationMode InterpolationMode { get; set; }
         public System.Drawing.Drawing2D.PixelOffsetMode PixelOffsetMode { get; set; }
 
-        private int mazeSize;
-        private int gridSize;
+        private Point mazeSize;
+        private Point gridSize;
         private Bitmap canvas;
         private int new_cell_count = 0;
         
@@ -78,13 +78,13 @@ namespace maze_ss
             new_cell_count = 0;
         }
 
-        public void reset(int size)
+        public void reset(Point size)
         {
             mazeSize = size;
-            gridSize = (mazeSize * 2) + 1;
+            gridSize = (mazeSize.multiply(2)).add(1, 1);
 
             new_cell_count = 0;
-            canvas = new Bitmap(gridSize, gridSize, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            canvas = new Bitmap(gridSize.i, gridSize.j, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             Image = canvas;
             Graphics g = Graphics.FromImage(Image);
             g.Clear(CLEAR_COLOR);

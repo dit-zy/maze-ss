@@ -25,15 +25,15 @@ namespace maze_ss
         int[,] cell;
         Point[,] cell_parent;
         Point goal;
-        int maze_size;
+        Point maze_size;
 
         OrderedBag<SearchCell> search_queue;
 
-        public MazeSolver(int mazeSize)
+        public MazeSolver(Point mazeSize)
         {
-            this.maze_size = mazeSize * 2 + 1;
-            cell = new int[maze_size, maze_size];
-            cell_parent = new Point[maze_size, maze_size];
+            this.maze_size = (mazeSize.multiply(2)).add(1, 1);
+            cell = new int[maze_size.i, maze_size.j];
+            cell_parent = new Point[maze_size.i, maze_size.j];
         }
 
         protected virtual void OnSolveStep(SolveStepEventArgs e)
@@ -63,7 +63,7 @@ namespace maze_ss
             start = new Point((start.i * 2) + 1, (start.j * 2) + 1);
             cell_parent[start.i, start.j] = start;
             search_queue = new OrderedBag<SearchCell>();
-            search_queue.Add(new SearchCell(start, (maze_size - 1) * 2, 0));
+            search_queue.Add(new SearchCell(start, maze_size.i + maze_size.j - 2, 0));
         }
 
         private void step()
@@ -83,7 +83,7 @@ namespace maze_ss
             foreach (Point delta in neighbor_deltas)
             {
                 Point neighbor = next.cell.add(delta);
-                if (neighbor.inBounds(maze_size, maze_size) && cell[neighbor.i, neighbor.j] == 1)
+                if (neighbor.inBounds(maze_size.i, maze_size.j) && cell[neighbor.i, neighbor.j] == 1)
                 {
                     cell[neighbor.i, neighbor.j] = 3;
                     cell_parent[neighbor.i, neighbor.j] = next.cell;

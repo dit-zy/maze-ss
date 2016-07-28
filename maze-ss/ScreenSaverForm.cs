@@ -21,6 +21,7 @@ namespace maze_ss
         private MazeGen maze_gen;
         private Timer maze_timer;
         private MazeSolver maze_solver;
+        private Point maze_size;
 
         private Random rand;
 
@@ -28,6 +29,15 @@ namespace maze_ss
         {
             InitializeComponent();
             this.Bounds = Bounds;
+
+            if(Bounds.Width < Bounds.Height)
+            {
+                maze_size = new Point(MAZE_SIZE, MAZE_SIZE * Bounds.Height / Bounds.Width);
+            }
+            else
+            {
+                maze_size = new Point(MAZE_SIZE * Bounds.Width / Bounds.Height, MAZE_SIZE);
+            }
 
             rand = new Random(seed);
         }
@@ -49,14 +59,14 @@ namespace maze_ss
 
         private void start()
         {
-            maze_gen = new MazeGen(MAZE_SIZE, rand.Next());
+            maze_gen = new MazeGen(maze_size, rand.Next());
             maze_gen.MazeGenComplete += new EventHandler(mazeGenComplete);
 
-            maze_solver = new MazeSolver(MAZE_SIZE);
+            maze_solver = new MazeSolver(maze_size);
             maze_solver.addMazeGen(maze_gen);
             maze_solver.Solution += new MazeSolver.SolutionHandler(solverSolution);
 
-            mazeView.reset(MAZE_SIZE);
+            mazeView.reset(maze_size);
             mazeView.addMazeGen(maze_gen);
             mazeView.addMazeSolver(maze_solver);
 
@@ -90,8 +100,8 @@ namespace maze_ss
 
             int i = rand.Next(2);
             int j = rand.Next(2);
-            Point start = new Point((MAZE_SIZE - 1) * i, (MAZE_SIZE - 1) * j);
-            Point goal = new Point((MAZE_SIZE - 1) * (1 - i), (MAZE_SIZE - 1) * (1 - j));
+            Point start = new Point((maze_size.i - 1) * i, (maze_size.j - 1) * j);
+            Point goal = new Point((maze_size.i - 1) * (1 - i), (maze_size.j - 1) * (1 - j));
             maze_solver.init(start, goal);
 
             maze_timer.Start();

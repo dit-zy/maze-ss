@@ -20,7 +20,7 @@ namespace maze_ss
         public event AddCellHandler AddCell;
         public event EventHandler MazeGenComplete;
 
-        private int mazeSize;
+        private Point maze_size;
         private Random rand;
         private Stack<AddCellEventArgs> search_stack;
         private bool[,] visited_cells;
@@ -35,15 +35,15 @@ namespace maze_ss
             MazeGenComplete?.Invoke(this, EventArgs.Empty);
         }
 
-        public MazeGen(int mazeSize, int seed)
+        public MazeGen(Point mazeSize, int seed)
         {
-            this.mazeSize = mazeSize;
+            this.maze_size = mazeSize;
 
             rand = new Random(seed);
-            search_stack = new Stack<AddCellEventArgs>(mazeSize);
-            visited_cells = new bool[mazeSize, mazeSize];
+            search_stack = new Stack<AddCellEventArgs>(mazeSize.i);
+            visited_cells = new bool[mazeSize.i, mazeSize.j];
 
-            Point starting_point = new Point(mazeSize / 2, mazeSize / 2);
+            Point starting_point = new Point(mazeSize.i / 2, mazeSize.j / 2);
             search_stack.Push(new AddCellEventArgs(starting_point, starting_point));
         }
 
@@ -80,7 +80,7 @@ namespace maze_ss
             foreach (Point delta in neighbor_deltas)
             {
                 Point neighbor = nextCell.add(delta);
-                if (neighbor.inBounds(mazeSize, mazeSize))
+                if (neighbor.inBounds(maze_size.i, maze_size.j))
                 {
                     neighbors.Add(neighbor);
                 }
